@@ -1,3 +1,4 @@
+# coding=utf-8
 """Binary Search Tree Python implementation."""
 
 
@@ -6,6 +7,8 @@ class Node:
         self.key = key
         self.left = None
         self.right = None
+        self.traversal = []
+        self.object_traversal = []
 
     def insert(self, value):
         if value > self.key:
@@ -33,12 +36,31 @@ class Node:
             else:
                 return False
 
-    def inorder(self):
+    def inorder(self, first=True, root=None):
+        if first:
+            self.traversal = []
+            first = False
+        if not root:
+            root = self
         if self.left:
-            self.left.inorder()
-        print(self.key)
+            self.left.inorder(first=first, root=root)
+        root.traversal.append(self.key)
         if self.right:
-            self.right.inorder()
+            self.right.inorder(first=first, root=root)
+        return self.traversal
+
+    def inorder_object_traversal(self, first=True, root=None):
+        if first:
+            self.object_traversal = []
+            first = False
+        if not root:
+            root = self
+        if self.left:
+            self.left.inorder_object_traversal(first=first, root=root)
+        root.object_traversal.append(self)
+        if self.right:
+            self.right.inorder_object_traversal(first=first, root=root)
+        return self.object_traversal
 
     def minimum_node(self):
         current = self
@@ -88,7 +110,7 @@ if __name__ == "__main__":
     root.insert(80)
     print("100", root.search(100))
     print("70", root.search(70))
-    root.inorder()
+    print(root.inorder())
     print(root.minimum_node().key)
     print([x.key for x in root.minimum_and_preceding_node()])
     print([x.key for x in root.find_pred_and_succ(40)])
