@@ -16,9 +16,9 @@ class TestHashTable(unittest.TestCase):
     def test_hash_table_perfomance(self):
         ht = HashTable()
         tl = 0
-        for y in range(100, 500):
-            keys = list(set([randrange(100000) for x in range(1, y)]))
-            values = [randrange(100000) for x in range(1, y)][:len(keys)]
+        for y in range(1, 2):
+            keys = list(set([randrange(500000) for x in range(1, 500000)]))
+            values = [randrange(500000) for x in range(1, y)][:len(keys)]
             tl += len(keys)
             array = [(key, value) for key, value in zip(keys, values)]
             ht.store(array)
