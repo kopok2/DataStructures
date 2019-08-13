@@ -56,6 +56,25 @@ class Graph:
                         break
         return traversal
 
+    def has_cycle(self):
+        if self.directed:
+            visited = [False for x in range(self.vertex_count)]
+            to_visit = [1]
+            while to_visit:
+                visiting = to_visit[-1]
+                if visited[visiting - 1]:
+                    return True
+                visited[visiting - 1] = True
+
+                if not sum([0 if visited[x - 1] else 1 for x in self.adjacent[visiting - 1]]):
+                    to_visit.pop(-1)
+                else:
+                    for adj in self.adjacent[visiting - 1]:
+                        if not visited[adj - 1]:
+                            to_visit.append(adj)
+                            break
+            return False
+
 
 if __name__ == "__main__":
     edges = [
@@ -72,3 +91,24 @@ if __name__ == "__main__":
     print(graph)
     print(graph.breadth_first_search())
     print(graph.depth_first_traversal())
+
+    edges2 = [
+        [0, 2, 1],
+        [0, 1, 1],
+        [1, 2, 1],
+        [2, 3, 1],
+        [2, 0, 1],
+        [3, 3, 1]
+    ]
+    g2 = Graph(edges2, 4, directed=True)
+    print(g2)
+    print(g2.has_cycle())
+
+    edges3 = [
+        [0, 2, 1],
+        [0, 1, 1],
+        [2, 3, 1]
+    ]
+    g3 = Graph(edges3, 4, directed=True)
+    print(g3)
+    print(g3.has_cycle())
