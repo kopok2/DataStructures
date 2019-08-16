@@ -38,4 +38,7 @@ class Trie:
                 position = position.children[searching]
             else:
                 return False
-        return True
+        if position.is_end:
+            return True
+        else:
+            return False
