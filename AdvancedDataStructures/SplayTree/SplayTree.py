@@ -67,6 +67,7 @@ def insert(root, key):
     current = root
     prev = current
     while current:
+        prev = current
         if current.value < key:
             current = current.right_child
         elif current.value > key:
