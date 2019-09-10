@@ -11,6 +11,21 @@ class Node:
         self.right = None
 
 
+def search_rec(root, point, depth):
+    if not root:
+        return None
+    if are_point_same(root.point, point):
+        return True
+    cd = depth % K
+    if point[cd] < root.point[cd]:
+        return search_rec(root.left, point, depth + 1)
+    return search_rec(root.right, point, depth + 1)
+
+
+def search(root, point):
+    return search_rec(root, point, 0)
+
+
 def insert_rec(root, point, depth):
     if not root:
         return Node(point)
@@ -99,5 +114,8 @@ if __name__ == "__main__":
     root = None
     for p in points:
         root = insert(root, p)
+    print(search(root, [30, 40]))
     root = delete_node(root, points[0])
     print(root.point)
+    print(search(root, [30, 40]))
+    print(search(root, [70, 70]))
